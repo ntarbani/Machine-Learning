@@ -58,6 +58,8 @@ models.append(('dtc',dtc))
 models.append(('dtc_reg',dtc_reg))
 models.append(('rf',rf))
 
+from sklearn.model_selection import cross_val_score,KFold
+
 results=[]
 names=[]
 for name, model in models:
@@ -68,14 +70,5 @@ for name, model in models:
     #print(cv_results)
     print("%s:  %f (%f)" %(name,np.mean(cv_results),np.var(cv_results,ddof=1)))
 
-from sklearn.model_selection import cross_val_score,KFold
 
-results=[]
-names=[]
-for name, model in models:
-    kfold=KFold(shuffle=True,n_splits=3,random_state=0)
-    results_cv=cross_val_score(model,X,y,cv=kfold,scoring='roc_auc')
-    results.append(results_cv)
-    names.append(name)
-    print(results_cv)
-    print("%s:  %f (%f)" %(name,np.mean(results_cv),np.var(results_cv,ddof=1)))
+
